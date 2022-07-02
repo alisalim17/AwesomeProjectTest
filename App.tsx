@@ -8,57 +8,60 @@ import {
   Button,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  Image,
 } from "react-native";
 import * as React from "react";
 import tw from "twrnc";
 
 export default function App() {
-  const [data, setData] = React.useState([
-    {
-      name: "Apple",
-      id: 1,
-    },
-    {
-      name: "Banana",
-      id: 2,
-    },
+  const images = {
+    "0": require("./assets/dice1.png"),
+    "1": require("./assets/dice2.png"),
+    "2": require("./assets/dice3.png"),
+    "3": require("./assets/dice4.png"),
+    "4": require("./assets/dice5.png"),
+    "5": require("./assets/dice6.png"),
+  };
 
-    {
-      name: "Orange",
-      id: 3,
-    },
+  const [data, setData] = React.useState({
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+  });
+  const [dice, setDice] = React.useState(0);
 
-    {
-      name: "Kiwi",
-      id: 4,
-    },
-    {
-      name: "Plum",
-      id: 5,
-    },
-    {
-      name: "Mango",
-      id: 6,
-    },
-    {
-      name: "Watemelon",
-      id: 7,
-    },
-    {
-      name: "Melon",
-      id: 8,
-    },
-  ]);
   return (
     <View style={tw`flex-1`}>
       <StatusBar style="dark" backgroundColor="#7ecf99" />
-      <ScrollView>
-        {data.map((item) => (
-          <View style={tw`my-8 bg-lime-300 p-4 `} key={item.id}>
-            <Text>{item.name}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      <View style={tw`flex items-center mt-12`}>
+        <Image source={images[dice]} />
+      </View>
+      <TouchableOpacity
+        style={tw`flex items-center`}
+        onPress={() => {
+          const n = Math.floor(Math.random() * 6);
+          setData({
+            ...data,
+            [n]: data[n] + 1,
+          });
+          setDice(n);
+        }}
+      >
+        <Text style={tw`text-blue-500 capitalize text-xl my-4`}>roll</Text>
+      </TouchableOpacity>
+      <View style={tw`flex items-center`}>
+        <ScrollView>
+          {Object.keys(data).map((i) => (
+            <Text>
+              {i}: {data[i]}
+            </Text>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 }
