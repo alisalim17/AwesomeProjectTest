@@ -11,8 +11,12 @@ import {
   FlatList,
   Image,
 } from "react-native";
+import { Alert } from "react-native";
+
 import * as React from "react";
 import tw from "twrnc";
+
+type ImageIndexType = 0 | 1 | 2 | 3 | 4 | 5;
 
 export default function App() {
   const images = {
@@ -38,26 +42,40 @@ export default function App() {
     <View style={tw`flex-1`}>
       <StatusBar style="dark" backgroundColor="#7ecf99" />
       <View style={tw`flex items-center mt-12`}>
-        <Image source={images[dice]} />
+        <Image source={images[dice as ImageIndexType]} />
       </View>
       <TouchableOpacity
         style={tw`flex items-center`}
         onPress={() => {
-          const n = Math.floor(Math.random() * 6);
-          setData({
-            ...data,
-            [n]: data[n] + 1,
-          });
-          setDice(n);
+          const n = Math.floor(Math.random() * 6) as ImageIndexType;
+          Alert.alert("Alert Title", "My Alert Msg", [
+            {
+              text: "Cancel",
+              onPress: () => {
+                console.log("cancel pressed");
+              },
+              style: "cancel",
+            },
+            {
+              text: "OK",
+              onPress: () => {
+                setData({
+                  ...data,
+                  [n]: data[n] + 1,
+                });
+                setDice(n);
+              },
+            },
+          ]);
         }}
       >
         <Text style={tw`text-blue-500 capitalize text-xl my-4`}>roll</Text>
       </TouchableOpacity>
       <View style={tw`flex items-center`}>
         <ScrollView>
-          {Object.keys(data).map((i) => (
+          {Object.keys(data).map((i: any) => (
             <Text>
-              {i}: {data[i]}
+              {i}: {data[i as ImageIndexType]}
             </Text>
           ))}
         </ScrollView>
