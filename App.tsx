@@ -1,18 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { Modal, Text, View } from "react-native";
+import { Modal, Switch, Text, View } from "react-native";
 
-import * as React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 
 export default function App() {
+  const [isEnabled, setIsEnabled] = useState(false);
   return (
-    <View style={tw`flex-1 pt-5`}>
+    <View style={tw`flex-1 items-center justify-center pt-5`}>
       <StatusBar style="dark" backgroundColor="#7ecf99" />
-
-      <Text>Main screen</Text>
-      <Modal visible={false}>
-        <Text>Modal screen</Text>
-      </Modal>
+      <Switch
+        thumbColor={isEnabled ? "yellow" : "white"}
+        trackColor={{ false: "red", true: "green" }}
+        onValueChange={() => setIsEnabled(!isEnabled)}
+        value={isEnabled}
+      />
     </View>
   );
 }
