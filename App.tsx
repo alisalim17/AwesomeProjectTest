@@ -1,76 +1,91 @@
-import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
-  Modal,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  Switch,
+  Button,
+  Platform,
   Text,
+  Vibration,
   View,
+  SafeAreaView,
+  StyleSheet,
 } from "react-native";
 
-import React, { useState } from "react";
-import tw from "twrnc";
-
-const wait = (timeout: number) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
+const Separator = () => {
+  return <View style={Platform.OS === "android" ? styles.separator : null} />;
 };
 
-export default function App() {
-  const [isEnabled, setIsEnabled] = useState(1);
-  const [refreshing, setRefreshing] = React.useState(false);
+const App = () => {
+  const ONE_SECOND_IN_MS = 1000;
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+  const PATTERN = [
+    1 * ONE_SECOND_IN_MS,
+    2 * ONE_SECOND_IN_MS,
+    3 * ONE_SECOND_IN_MS,
+  ];
+
+  const PATTERN_DESC =
+    Platform.OS === "android"
+      ? "wait 1s, vibrate 2s, wait 3s"
+      : "wait 1s, vibrate, wait 2s, vibrate, wait 3s";
 
   return (
-    <View style={tw`flex-1 items-center justify-center pt-5`}>
-      <StatusBar style="dark" backgroundColor="#7ecf99" />
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <Text style={{ fontSize: 26, color: "orange", textAlign: "center" }}>
-          List of Default Android Font Family in React Native
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "monospace" }}>
-          1. Monospace
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "normal" }}>2. Normal</Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "notoserif" }}>
-          3. Notoserif
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "Roboto" }}>4. Roboto</Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "sans-serif" }}>
-          5. Sans-Serif
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "sans-serif-light" }}>
-          6. Sans-Serif-Light
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "sans-serif-thin" }}>
-          7. Sans Serif Thin
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "sans-serif-condensed" }}>
-          8. Sans-Serif-Condensed
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "sans-serif-medium" }}>
-          9. Sans Serif Medium
-        </Text>
-
-        <Text style={{ fontSize: 26, fontFamily: "serif" }}>10. Serif</Text>
-      </ScrollView>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Text style={[styles.header, styles.paragraph]}>Vibration API</Text>
+      <View>
+        <Button title="Vibrate once" onPress={() => Vibration.vibrate()} />
+      </View>
+      <Separator />
+      {Platform.OS == "android"
+        ? [
+            <View>
+              <Button
+                title="Vibrate for 10 seconds"
+                onPress={() => Vibration.vibrate(10 * ONE_SECOND_IN_MS)}
+              />
+            </View>,
+            <Separator />,
+          ]
+        : null}
+      <Text style={styles.paragraph}>Pattern: {PATTERN_DESC}</Text>
+      <Button
+        title="Vibrate with pattern"
+        onPress={() => Vibration.vibrate(PATTERN)}
+      />
+      <Separator />
+      <Button
+        title="Vibrate with pattern until cancelled"
+        onPress={() => Vibration.vibrate(PATTERN, true)}
+      />
+      <Separator />
+      <Button
+        title="Stop vibration pattern"
+        onPress={() => Vibration.cancel()}
+        color="#FF0000"
+      />
+    </SafeAreaView>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingTop: 44,
+    padding: 8,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  paragraph: {
+    margin: 24,
+    textAlign: "center",
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: "#737373",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+});
+
+export default App;
