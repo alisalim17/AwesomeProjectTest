@@ -1,91 +1,97 @@
-import React from "react";
+// In App.js in a new project
+
+import * as React from "react";
+import { View, Text, Button, TouchableOpacity } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { create } from "twrnc";
+import { StatusBar } from "expo-status-bar";
 import {
-  Button,
-  Platform,
-  Text,
-  Vibration,
-  View,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+  useFonts,
+  Inter_900Black,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+} from "@expo-google-fonts/inter";
+import AppLoading from "expo-app-loading";
 
-const Separator = () => {
-  return <View style={Platform.OS === "android" ? styles.separator : null} />;
-};
+const tw = create(require(`./tailwind.config.js`));
 
-const App = () => {
-  const ONE_SECOND_IN_MS = 1000;
-
-  const PATTERN = [
-    1 * ONE_SECOND_IN_MS,
-    2 * ONE_SECOND_IN_MS,
-    3 * ONE_SECOND_IN_MS,
-  ];
-
-  const PATTERN_DESC =
-    Platform.OS === "android"
-      ? "wait 1s, vibrate 2s, wait 3s"
-      : "wait 1s, vibrate, wait 2s, vibrate, wait 3s";
-
+const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={[styles.header, styles.paragraph]}>Vibration API</Text>
-      <View>
-        <Button title="Vibrate once" onPress={() => Vibration.vibrate()} />
-      </View>
-      <Separator />
-      {Platform.OS == "android"
-        ? [
-            <View>
-              <Button
-                title="Vibrate for 10 seconds"
-                onPress={() => Vibration.vibrate(10 * ONE_SECOND_IN_MS)}
-              />
-            </View>,
-            <Separator />,
-          ]
-        : null}
-      <Text style={styles.paragraph}>Pattern: {PATTERN_DESC}</Text>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Home Screen</Text>
       <Button
-        title="Vibrate with pattern"
-        onPress={() => Vibration.vibrate(PATTERN)}
+        title="Go to product category page"
+        onPress={() => navigation.navigate("ProductCategory")}
+        // onPress={() =>
+        // navigation.reset({ routes: [{ name: "ProductCategory" }], index: 0 })
+        // }
       />
-      <Separator />
-      <Button
-        title="Vibrate with pattern until cancelled"
-        onPress={() => Vibration.vibrate(PATTERN, true)}
-      />
-      <Separator />
-      <Button
-        title="Stop vibration pattern"
-        onPress={() => Vibration.cancel()}
-        color="#FF0000"
-      />
-    </SafeAreaView>
+      <View
+        style={{
+          width: 200,
+          height: 200,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.23,
+          shadowRadius: 2.62,
+
+          elevation: 4,
+        }}
+      ></View>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingTop: 44,
-    padding: 8,
-  },
-  header: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  paragraph: {
-    margin: 24,
-    textAlign: "center",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-});
+type RootStackParamList = {
+  Home: undefined;
+  ProductCategory: undefined;
+};
+
+type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;
+
+const RootStack = createStackNavigator<RootStackParamList>();
+
+function App() {
+  let [fontsLoaded] = useFonts({
+    "simple-line-icons": Inter_900Black,
+    bold: Inter_900Black,
+  });
+
+  if (!fontsLoaded) return <AppLoading />;
+  return (
+    <NavigationContainer>
+      <StatusBar style="dark" backgroundColor="#7ecf99" />
+
+      <RootStack.Navigator
+        screenOptions={{
+          headerTitleAlign: "center",
+          gestureEnabled: true,
+          gestureDirection: "vertical",
+
+          headerBackImage: () => (
+            <TouchableOpacity>
+              <Text style={tw``}>back</Text>
+              <Text style={tw`font-primary-900`}>back</Text>
+              <Text style={{ fontFamily: "bold" }}>back</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      >
+        <RootStack.Screen name="Home" component={HomeScreen} />
+        <RootStack.Screen name="ProductCategory" component={HomeScreen} />
+      </RootStack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;
