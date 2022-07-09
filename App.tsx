@@ -44,6 +44,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
+        console.log("this is very cool", notification);
         setNotification(notification);
       });
 
