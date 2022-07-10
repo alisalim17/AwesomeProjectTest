@@ -26,6 +26,7 @@
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-gesture-handler": "~2.2.1",
+    "react-native-reanimated": "^2.9.1",
     "react-native-safe-area-context": "^4.3.1",
     "react-native-screens": "^3.14.1",
     "react-native-web": "0.17.7",
@@ -34,8 +35,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@tsconfig/node16": "^1.0.3",
-    "@types/react": "~17.0.43",
-    "@types/react-native": "~0.66.13",
+    "@types/react": "latest",
+    "@types/react-native": "latest",
     "typescript": "^4.7.4"
   },
   "private": true

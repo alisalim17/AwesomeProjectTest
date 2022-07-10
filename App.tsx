@@ -1,125 +1,24 @@
 // In App.js in a new project
 
-import * as React from "react";
-import { View, Text, Button, TouchableOpacity, Platform } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { Inter_900Black, useFonts } from "@expo-google-fonts/inter";
+import { NavigationContainer } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { create } from "twrnc";
-import { StatusBar } from "expo-status-bar";
-import {
-  useFonts,
-  Inter_900Black,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-} from "@expo-google-fonts/inter";
+import { createStackNavigator } from "@react-navigation/stack";
 import AppLoading from "expo-app-loading";
-import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
+import { StatusBar } from "expo-status-bar";
+import * as React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { create } from "twrnc";
+import Notification from "./Notification";
+import TestReanimated from "./TestReanimated";
 
 const tw = create(require(`./tailwind.config.js`));
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
-  const [expoPushToken, setExpoPushToken] = React.useState("");
-  const [notification, setNotification] = React.useState(false);
-  const notificationListener = React.useRef();
-  const responseListener = React.useRef();
-
-  React.useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("this is very cool", notification);
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-    } else {
-      alert("Must use physical device for Push Notifications");
-    }
-
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-    console.log("token", token);
-    return token;
-  }
-
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to product category page"
-        onPress={() => navigation.navigate("ProductCategory")}
-        // onPress={() =>
-        // navigation.reset({ routes: [{ name: "ProductCategory" }], index: 0 })
-        // }
-      />
-      <Button
-        title="Send notification"
-        onPress={() => {
-          Notifications.scheduleNotificationAsync({
-            content: {
-              title: "Test notification cindir husi",
-              body: "This is my local notification",
-            },
-            trigger: {
-              seconds: 10,
-            },
-          });
-        }}
-        // onPress={() =>
-        // navigation.reset({ routes: [{ name: "ProductCategory" }], index: 0 })
-        // }
-      />
+      {/* <Notification /> */}
+      <TestReanimated />
     </View>
   );
 };
