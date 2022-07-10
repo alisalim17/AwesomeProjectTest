@@ -9,8 +9,8 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { create } from "twrnc";
-import Notification from "./Notification";
-import TestReanimated from "./TestReanimated";
+import Notification from "./Examples/Notification";
+import TestReanimated from "./Examples/ReanimatedExamples/ReanimatedExample1";
 
 const tw = create(require(`./tailwind.config.js`));
 
