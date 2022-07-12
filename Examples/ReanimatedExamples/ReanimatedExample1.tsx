@@ -16,7 +16,7 @@ const handleRotation = (progress: Animated.SharedValue<number>) => {
   return `${progress.value * 2 * Math.PI}rad`;
 };
 
-const DragAndDrop = () => {
+const ReanimatedExample1 = () => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(2);
 
@@ -41,4 +41,4 @@ const DragAndDrop = () => {
   );
 };
 
-export default DragAndDrop;
+export default ReanimatedExample1;

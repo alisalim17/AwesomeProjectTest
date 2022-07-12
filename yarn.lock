@@ -6198,6 +6198,11 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-gallery-toolkit@^1.0.0-alpha.1.2:
+  version "1.0.0-alpha.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-gallery-toolkit/-/react-native-gallery-toolkit-1.0.0-alpha.1.2.tgz#fdad07e39d577cec5dcea528dfb2e0924bd54ed1"
+  integrity sha512-8R5hWOWJIL6Kv66hyfku7zkyEH4BJsjSJYJiYcrbQmNjXtwXEwCHJ2zIsIhqExTb3GtBCcSCx64UY/DkTskM/A==
+
 react-native-gesture-handler@~2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.2.1.tgz#672258aa5a40c92a97c736bdde0a8bd6c8c6c692"

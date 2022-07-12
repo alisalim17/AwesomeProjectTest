@@ -10,7 +10,7 @@ import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { create } from "twrnc";
 import Notification from "./Examples/Notification";
-import TestReanimated from "./Examples/ReanimatedExamples/ReanimatedExample1";
+import TestReanimated2 from "./Examples/ReanimatedExamples/ReanimatedExample2";
 
 const tw = create(require(`./tailwind.config.js`));
 
@@ -18,7 +18,8 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {/* <Notification /> */}
-      <TestReanimated />
+      {/* <TestReanimated1 /> */}
+      <TestReanimated2 />
     </View>
   );
 };
