@@ -15,10 +15,12 @@ export default function App() {
   const [counter, setCounter] = React.useState(0);
   const [name, setName] = React.useState("");
   console.log(counter);
+
   const handlePlus = () => {
     setCounter(counter + 1);
     console.log("+++++++");
   };
+  
   const handleMinus = () => {
     setCounter(counter - 1);
     console.log("---------");

@@ -20,6 +20,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
       {/* <Notification /> */}
       {/* <TestReanimated1 /> */}
       <TestReanimated2 />
+      {/* <Text>hey2</Text> */}
     </View>
   );
 };
