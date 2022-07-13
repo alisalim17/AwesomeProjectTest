@@ -9,8 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { create } from "twrnc";
-import Notification from "./Examples/Notification";
-import TestReanimated2 from "./Examples/ReanimatedExamples/ReanimatedExample2";
+import Pan from "./Examples/ReanimatedExamples/Pan";
 
 const tw = create(require(`./tailwind.config.js`));
 
@@ -19,7 +18,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {/* <Notification /> */}
       {/* <TestReanimated1 /> */}
-      <TestReanimated2 />
+      <Pan />
       {/* <Text>hey2</Text> */}
     </View>
   );

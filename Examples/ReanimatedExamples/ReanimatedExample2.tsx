@@ -2,13 +2,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
-  GestureEventPayload,
-  PanGestureHandler, PanGestureHandlerEventPayload, PanGestureHandlerGestureEvent
+  PanGestureHandler, PanGestureHandlerGestureEvent
 } from "react-native-gesture-handler";
 import Animated, {
-  useAnimatedGestureHandler, useAnimatedStyle, useSharedValue
+  useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withDecay
 } from "react-native-reanimated";
-import Card, { Cards } from "../Card";
+import Card, { Cards, CARD_HEIGHT, CARD_WIDTH } from "../Card";
 
 
 const styles = StyleSheet.create({
@@ -22,18 +21,30 @@ interface GestureContext {
   offsetY: number
 }
 
-
-const Gesture = () => {
+const Gesture:React.FC<{width:number,height:number}> = ({width,height}) => {
+  const boundX = width - CARD_WIDTH;
+  const boundY = height - CARD_HEIGHT;
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
-  const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent,{offsetY:number,offsetX:number}>({
+  const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { offsetY: number, offsetX: number }>({
     onStart: (event, ctx) => {
       ctx.offsetX = translateX.value
       ctx.offsetY = translateY.value
     },
-    onActive: (event, ctx:GestureContext) => {
+    onActive: (event, ctx: GestureContext) => {
+
       translateX.value = ctx.offsetX + event.translationX;
       translateY.value = ctx.offsetY + event.translationY;
+    },
+    onEnd: ({ velocityX, velocityY }) => {
+      translateX.value = withDecay({
+        velocity: velocityX,
+          : [0, boundX],
+      });
+      translateY.value = withDecay({
+        velocity: velocityY,
+        clamp: [0, boundY],
+      });
     },
 
   });
