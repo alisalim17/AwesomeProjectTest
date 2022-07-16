@@ -26,6 +26,7 @@ const Gesture:React.FC<{width:number,height:number}> = ({width,height}) => {
   const boundY = height - CARD_HEIGHT;
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
+  
   const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { offsetY: number, offsetX: number }>({
     onStart: (event, ctx) => {
       ctx.offsetX = translateX.value
@@ -39,8 +40,8 @@ const Gesture:React.FC<{width:number,height:number}> = ({width,height}) => {
     onEnd: ({ velocityX, velocityY }) => {
       translateX.value = withDecay({
         velocity: velocityX,
-          : [0, boundX],
-      });
+          clamp: [0, boundX],
+      }); 
       translateY.value = withDecay({
         velocity: velocityY,
         clamp: [0, boundY],
