@@ -8,20 +8,31 @@ import AppLoading from "expo-app-loading";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { create } from "twrnc";
 import Pan from "./Examples/ReanimatedExamples/Pan";
 import {Tarot} from "./Examples/ReanimatedExamples/ReanimatedExample3";
+import TestReanimated4 from "./Examples/ReanimatedExamples/ReanimatedExample4";
+import Transations from "./Examples/screens/Transations/Transations";
 
 const tw = create(require(`./tailwind.config.js`));
 
 const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={tw`flex-1`}>
       {/* <Notification /> */}
       {/* <TestReanimated1 /> */}
+      {/* <TestReanimated4 /> */}
       {/* <Pan /> */}
-      <Tarot />
+      {/* <Tarot /> */}
       {/* <Text>hey2</Text> */}
+      <ScrollView style={tw`p-4 `}>
+        <TouchableOpacity onPress={() => navigation.navigate("Transations")} style={tw`bg-blue-400 p-4 rounded-lg`}>
+          <Text style={tw`text-blue-900 text-2xl font-bold`}>Transations</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      
+
     </View>
   );
 };
@@ -29,6 +40,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
 type RootStackParamList = {
   Home: undefined;
   ProductCategory: undefined;
+  Transations: undefined;
 };
 
 type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -54,14 +66,13 @@ function App() {
           gestureDirection: "vertical",
 
           headerBackImage: () => (
-            <TouchableOpacity>
               <Text style={tw` text-blue-500`}>back</Text>
-            </TouchableOpacity>
           ),
         }}
       >
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="ProductCategory" component={HomeScreen} />
+        <RootStack.Screen name="Transations" component={Transations} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
