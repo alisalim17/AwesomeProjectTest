@@ -10,6 +10,7 @@ import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { create } from "twrnc";
 import Pan from "./Examples/ReanimatedExamples/Pan";
+import {Tarot} from "./Examples/ReanimatedExamples/ReanimatedExample3";
 
 const tw = create(require(`./tailwind.config.js`));
 
@@ -18,7 +19,8 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {/* <Notification /> */}
       {/* <TestReanimated1 /> */}
-      <Pan />
+      {/* <Pan /> */}
+      <Tarot />
       {/* <Text>hey2</Text> */}
     </View>
   );

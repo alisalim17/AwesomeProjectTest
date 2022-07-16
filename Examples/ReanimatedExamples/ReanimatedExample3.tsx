@@ -1,27 +1,52 @@
-
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import {
-  PanGestureHandler, PanGestureHandlerGestureEvent
-} from "react-native-gesture-handler";
-import Animated, {
-  useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withDecay
-} from "react-native-reanimated";
-import Card, { Cards, CARD_HEIGHT, CARD_WIDTH } from "../Card";
+import { View, StyleSheet } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
 
+import { Card } from "./Card";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+const cards = [
+  {
+    source: require("../../assets/death.png"),
   },
-});
+  {
+    source: require("../../assets/chariot.png"),
+  },
+  {
+    source: require("../../assets/high-priestess.png"),
+  },
+  // {
+  //   source: require("../../assets/justice.png"),
+  // },
+  {
+    source: require("../../assets/lover.png"),
+  },
+  {
+    source: require("../../assets/pendu.png"),
+  },
+  {
+    source: require("../../assets/tower.png"),
+  },
+  {
+    source: require("../../assets/strength.png"),
+  },
+];
 
+export const assets = cards.map((card) => card.source);
 
-const Gesture:React.FC = () => {
+export const Tarot = () => {
+  const shuffleBack = useSharedValue(false);
   return (
     <View style={styles.container}>
+      {cards.map((card, index) => (
+        <Card card={card} key={index} index={index} shuffleBack={shuffleBack} />
+      ))}
     </View>
   );
 };
 
-export default Gesture;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "lightblue",
+  },
+});
