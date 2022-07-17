@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Text, Touchable, View } from 'react-native'
-import Card, { assets, Cards } from '../../Card'
+import Card, { assets, Cards, CARD_HEIGHT, CARD_WIDTH } from '../../Card'
 import tw from 'twrnc'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
 import { useSharedValue } from 'react-native-gallery-toolkit'
 
 const alpha = Math.PI / 6
@@ -27,9 +27,17 @@ const Box: React.FC<{ card: number, toggled: boolean }> = ({ card, toggled }) =>
 
     const animatedStyles = useAnimatedStyle(() => {
         return {
-            transform: [{
-                rotate: `${rotate.value}rad`,
-            }]
+            transform: [
+                {
+                    translateX: -CARD_WIDTH / 2
+                },
+                {
+                    rotate: `${rotate.value}rad`,
+                },
+                {
+                    translateX: CARD_WIDTH / 2
+                },
+            ]
         };
     });
 
@@ -49,7 +57,7 @@ const Transations = () => {
         <View style={tw`flex-1`}>
 
             <View style={tw`bg-blue-500 justify-center items-center flex-9`}>
-                {cards.slice(0,5).map((card) => <Box toggled={toggled} card={card} />
+                {cards.slice(0, 3).map((card) => <Box toggled={toggled} card={card} />
                 )}
 
             </View>
