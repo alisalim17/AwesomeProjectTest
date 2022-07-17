@@ -13,6 +13,7 @@ import { create } from "twrnc";
 import Pan from "./Examples/ReanimatedExamples/Pan";
 import {Tarot} from "./Examples/ReanimatedExamples/ReanimatedExample3";
 import TestReanimated4 from "./Examples/ReanimatedExamples/ReanimatedExample4";
+import Animations from "./Examples/screens/Animations/Animations";
 import Transations from "./Examples/screens/Transations/Transations";
 
 const tw = create(require(`./tailwind.config.js`));
@@ -30,6 +31,10 @@ const HomeScreen: React.FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Transations")} style={tw`bg-blue-400 p-4 rounded-lg`}>
           <Text style={tw`text-blue-900 text-2xl font-bold`}>Transations</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Animations")} style={tw`bg-blue-400 p-4 rounded-lg`}>
+          <Text style={tw`text-blue-900 text-2xl font-bold`}>Animations</Text>
+        </TouchableOpacity>
+
       </ScrollView>
       
 
@@ -41,6 +46,7 @@ type RootStackParamList = {
   Home: undefined;
   ProductCategory: undefined;
   Transations: undefined;
+  Animations: undefined;
 };
 
 type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -73,6 +79,7 @@ function App() {
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="ProductCategory" component={HomeScreen} />
         <RootStack.Screen name="Transations" component={Transations} />
+        <RootStack.Screen name="Animations" component={Animations} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
